@@ -13,8 +13,7 @@
 	To test it, server keeps hiting the "Enter" until the socket is closed
 */
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]){
 	int sock;
 	struct sockaddr_in serv_addr, my_addr;
 	char message[500];
@@ -26,8 +25,7 @@ int main(int argc, char* argv[])
 	}
 	
 	sock=socket(PF_INET, SOCK_STREAM, 0);
-	if(sock == -1)
-	{
+	if(sock == -1){
 		perror("socket() error!!");
 		exit(1);
 	}
@@ -37,16 +35,14 @@ int main(int argc, char* argv[])
 	serv_addr.sin_addr.s_addr=inet_addr(argv[1]);
 	serv_addr.sin_port=htons(atoi(argv[2]));
 		
-	if(connect(sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr))==-1) 
-	{
+	if(connect(sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr))==-1){
 		perror("connect() error!!");
 		exit(1);
 	}
 	for(;;){
 		str_len=recv(sock, message, sizeof(message), 0);
 	//str_len=read(sock, message, sizeof(message));
-		if(str_len==-1)
-		{
+		if(str_len==-1)	{
 			perror("recv() error!!");
 			exit(1);
 		}
@@ -57,10 +53,15 @@ int main(int argc, char* argv[])
 		printf("Message from server: %s \n", message); 
 	}
 	
-#if 1
+#if 0
 	printf("Press Enter to close the socket : ");
 	getchar();
 #endif
 	close(sock);
 	return 0;
 }
+
+/*
+* while waiting for new message using recv, client may be able to detect 
+* the lost of connection when a server close the socket.
+*/

@@ -6,8 +6,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]){
 	int serv_sock;
 	int clnt_sock;
 
@@ -25,8 +24,7 @@ int main(int argc, char *argv[])
 	}
 	
 	serv_sock=socket(PF_INET, SOCK_STREAM, 0);
-	if(serv_sock == -1) 
-	{
+	if(serv_sock == -1){
 		perror("socket() error!!");
 		exit(1);
 	}
@@ -35,8 +33,7 @@ int main(int argc, char *argv[])
 	// getchar();
 	
 #if 1
-	if(setsockopt(serv_sock, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1)
-	{
+	if(setsockopt(serv_sock, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1){
 		perror("setsockopt() error!!");
 		exit(1);
 	}
@@ -47,14 +44,12 @@ int main(int argc, char *argv[])
 	serv_addr.sin_addr.s_addr=htonl(INADDR_ANY);
 	serv_addr.sin_port=htons(atoi(argv[1]));
 
-	if(bind(serv_sock, (struct sockaddr*) &serv_addr, sizeof(serv_addr))==-1 )
-	{
+	if(bind(serv_sock, (struct sockaddr*) &serv_addr, sizeof(serv_addr))==-1 ){
 		perror("bind() error!!");
 		exit(1);
 	}
 	
-	if(listen(serv_sock, 5)==-1)
-	{
+	if(listen(serv_sock, 5)==-1){
 		perror("listen() error!!");
 		exit(1);
 	}
@@ -62,17 +57,17 @@ int main(int argc, char *argv[])
 	clnt_addr_size=sizeof(clnt_addr);  
 	clnt_sock=accept(serv_sock, (struct sockaddr*)&clnt_addr,&clnt_addr_size);
 	
+
+	if(clnt_sock==-1){
+		perror("accept() error!!");
+		exit(1);
+	}
+	
 /*
 	This example is to see what port is being used in client site for communication
 */
 	printf("Connected to the client ip --> %s\n", inet_ntoa(clnt_addr.sin_addr));
 	printf("Connected to the client port --> %d\n", htons(clnt_addr.sin_port));
-	
-	if(clnt_sock==-1)
-	{
-		perror("accept() error!!");
-		exit(1);
-	}
 	
 	send(clnt_sock, message, sizeof(message), 0);
 	//write(clnt_sock, message, sizeof(message));

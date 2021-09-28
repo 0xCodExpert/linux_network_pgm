@@ -11,9 +11,7 @@
 #include <arpa/inet.h>
 #include <stdlib.h>
 
-
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]){
 	// char *addr1="127.212.124.78";
 	char *addr1=argv[1];
 	char *addr2="127.212.124.257";

@@ -14,32 +14,15 @@ int main(int argc, char* argv[]){
 	int str_len;
 	socklen_t len;
 	
-	if(argc!=3){
-		printf("Usage : %s <IP> <port>\n", argv[0]);
-		exit(1);
-	}
-	
 	sock=socket(PF_INET, SOCK_STREAM, 0);
-	if(sock == -1){
-		perror("socket() error!!");
-		exit(1);
-	}
 	
-	memset(&serv_addr, 0, sizeof(serv_addr));
+	// memset(&serv_addr, 0, sizeof(serv_addr));
 	serv_addr.sin_family=AF_INET;
-	serv_addr.sin_addr.s_addr=inet_addr(argv[1]);
-	serv_addr.sin_port=htons(atoi(argv[2]));
-	// if(inet_aton(argv[1], &serv_addr.sin_addr) !=1){
-		// fprintf(stderr, "inet_aton() error");
-		// exit(1);
-	// }else{
-		// serv_addr.sin_port=htons(atoi(argv[2]));
-	// }
-		
-	if(connect(sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr))==-1){
-		perror("connect() error!!");
-		exit(1);
-	}
+	// serv_addr.sin_port=htons(atoi(argv[2]));
+	serv_addr.sin_port=htons(atoi("3333"));
+	inet_aton("192.168.60.100", &serv_addr.sin_addr);
+	
+	connect(sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
 
 #if 0			//It is to see the peer information in terms of name and port #
 	len = sizeof(serv_addr);
@@ -50,12 +33,7 @@ int main(int argc, char* argv[]){
 	
 	str_len=recv(sock, message, sizeof(message), 0);
 	//str_len=read(sock, message, sizeof(message));
-	if(str_len==-1){
-		perror("recv() error!!");
-		exit(1);
-	}
 	printf("Message from server: %s (%d)\n", message, str_len); 
-
 
 #if 0
 	printf("Press Enter to close the socket : ");
