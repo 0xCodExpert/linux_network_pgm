@@ -15,16 +15,13 @@ int main(int argc, char *argv[]){
 	socklen_t clnt_addr_size;
 	
 	int rst;
-
 	char message[]="Welcome to Linux Network Programming!";
-
-	int yes = 1;
+	int enable = 1;
 	
 	serv_sock=socket(PF_INET, SOCK_STREAM, 0);
 	
-	
 #if 1
-	setsockopt(serv_sock, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int));
+	setsockopt(serv_sock, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int));
 #endif
 	
 	// memset(&serv_addr, 0, sizeof(serv_addr));

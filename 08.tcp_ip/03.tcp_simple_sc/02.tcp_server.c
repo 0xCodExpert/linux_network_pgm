@@ -15,10 +15,8 @@ int main(int argc, char *argv[]){
 	socklen_t clnt_addr_size;
 	
 	int rst;
-
 	char message[]="Welcome to Linux Network Programming!";
-
-	int yes = 1;
+	int enable = 1;
 	
 	if(argc!=2){
 		printf("Usage : %s <port>\n", argv[0]);
@@ -32,7 +30,7 @@ int main(int argc, char *argv[]){
 	}
 
 #if 1
-	if(setsockopt(serv_sock, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1){
+	if(setsockopt(serv_sock, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int)) == -1){
 		perror("setsockopt() error!!");
 		exit(1);
 	}

@@ -76,8 +76,7 @@ int main(void){
 			close(new_fd);
 			exit(0);
 		}
-		// close(new_fd);
-
+		close(new_fd);	//parent close the client socket as they are being servered by child
 		waitpid(-1, NULL, WNOHANG);
 	}
 	return 0;
